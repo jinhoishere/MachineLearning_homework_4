@@ -24,17 +24,19 @@ if __name__ == '__main__':
             sgd.zero_grad()
             predict_y = model(train_x.float())
             # start your code here (lossfunction  4' requirement: use existing variable)
-            loss =
+            loss = loss_fn(predict_y, train_label)
             if idx % 10 == 0:
                 print('idx: {}, loss: {}'.format(idx, loss.sum().item()))
             #start your code here (back propagation 4' ~2lines)
+            loss.backward()
+            sgd.step()
 
         all_correct_num = 0
         all_sample_num = 0
         model.eval()
         for idx, (test_x, test_label) in enumerate(test_loader):
             #start your code here (2' )
-            predict_y =
+            predict_y = model(test_x.float())
             predict_y = np.argmax(predict_y, axis=-1)
             current_correct_num = 0
             for i in range(len(test_label)):

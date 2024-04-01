@@ -9,6 +9,15 @@ class Model(Module):
         self.relu1 = nn.ReLU()
         self.pool1 = nn.MaxPool2d(2)
         #start your code here to complete the Lenet (~9 lines) (10')
+        self.conv2 = nn.Conv2d(6, 16, 5)
+        self.reul2 = nn.ReLU()
+        self.pool2 = nn.MaxPool2d(2)
+        self.fc1 = nn.Linear(16 * 1 * 1, 120)
+        self.relu3 = nn.ReLU()
+        self.fc2 = nn.Linear(120, 84)
+        self.relu4 = nn.ReLU()
+        self.fc3 = nn.Linear(84, 10)
+        self.softmax = nn.Softmax(dim=1)
 
 
     def forward(self, x):
@@ -16,4 +25,15 @@ class Model(Module):
         y = self.relu1(y)
         y = self.pool1(y)
         #start your code here (~9-10 lines) (10')
+        y = self.conv2(y)
+        y = self.relu2(y)
+        y = self.pool2(y)
+        y = y.view(-1, 5*5)
+        y = self.fc1(y)
+        y = self.relu3(y)
+        y = self.fc2(y)
+        y = self.relu4(y)
+        y = self.fc3(y)
+        y = self.softmax(y)
+
         return y
